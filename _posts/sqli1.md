@@ -5,30 +5,17 @@ tags: [sqli-labs]
 ---
 
 #### sql 字符
-字符串运算符
-```sql
- 'or
- ```
-多行注释
-<!-- more -->
-```sql
-/*...*/
+字符串运算符 ```'or```, 
 
-```
-加号，连接（在URL中等同于空格）
-```sql
-+
-```
-单行注释
-```sql
-#
-```
-或
-```sql
---
-```
+多行注释 ```/*...*/```,   
 
-#### sql injection
+加号,连接（在URL中等同于空格） ```+```,
+
+单行注释 ```#```,
+
+或 ```--```
+
+#### 注入
 ![Alt text](http://image-1252432001.file.myqcloud.com/sqli1.png)
 
 输入id值为```1'```来破坏查询。
@@ -39,6 +26,7 @@ http://localhost/sqli-labs/Less-1/?id=1'
 得到下列结果
 
 ![Alt text](http://image-1252432001.file.myqcloud.com/sqli2.png)
+
 可以猜测后端应该是
 
 ```sql
