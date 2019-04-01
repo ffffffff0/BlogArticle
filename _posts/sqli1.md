@@ -14,7 +14,7 @@ tags: [sqli-labs]
 单行注释 ```#```,
 
 或 ```--```
-
+<!--more--->
 #### 注入
 ![Alt text](http://image-1252432001.file.myqcloud.com/sqli1.png)
 
