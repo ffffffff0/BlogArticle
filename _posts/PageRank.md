@@ -1,7 +1,7 @@
 ---
 title: PageRank算法
 date: 2018-2-22
-tages: [PageRank, Google, Math]
+tags: [PageRank, Google, Math]
 mathjax: true
 ---
 
