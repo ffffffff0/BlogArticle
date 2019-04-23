@@ -230,5 +230,71 @@ def geneticoptimize(domain, costf, popsize=50, step=1, mutprob=0.2, elite=0.2, m
         print(scores[0][0])
     return scores[0][1]
 ```
+##### 梯度下降
+在一维函数中，斜率是函数在某一点的瞬时变化率。梯度是函数的斜率的一般化表达，它不是一个值，而是一个向量。在输入空间中，梯度是各个维度的斜率组成的向量（或者称为导数derivatives）。对一维函数的求导公式如下：
+$$\displaystyle\frac{df(x)}{dx}=\lim_{h\to 0}\frac{f(x+h)-f(x)}{h}$$
+
+当函数有多个参数的时候，称导数为偏导数。而梯度就是在每个维度上偏导数所形成的向量。
+
+###### 计算梯度
+以SVM的损失函数的梯度计算为例；
+
+SVM的损失函数想要SVM在正确分类上的得分始终比不正确分类上的得分高出一个边界值 $\Delta$.放在线性分类其中就是，第i个数据中包含图像$x_i$的像素和代表正确类别的标签$y_i$。评分函数输入像素数据，然后通过公式$f(x_i,W)$来计算不同分类类别的分值。这里我们将分值简写为s。比如，针对第j个类别的得分就是第j个元素：$s_j=f(x_i,W)_j$。针对第i个数据的多类SVM的损失函数定义如下：
+
+$$\displaystyle L_i=\sum_{j\not=y_i}max(0,s_j-s_{y_i}+\Delta)$$
+利用线性评分函数$(f(x_i,W)=Wx_i)$，可以将损失函数的公式改写为：
+$$\displaystyle L_i=\sum_{j\not=y_i}max(0,w^T_jx_i-w^T_{y_i}x_i+\Delta)$$
+>$x_i$示第i个样本,为行向量。假设有N个样本,特征个数为D
+
+>$y_j$表示该样本的label，假设有C个类
+
+>Δ是margin
+
+>$w_j$为第j个类的权重，为长度为D的列向量。
+
+>$w_j$为我们要学习的参数，总共有C∗D 个，用W表示.
+损失函数$L_i$关于W的梯度可以表示为：
+$$\frac{\partial{L_i}}{\partial{w}}=[\frac{d{L_i}}{d{w_1}},\frac{d{L_i}}{d{w_2}},...,\frac{d{L_i}}{d{w_c}}]=\left( \begin{array}{ccc}\frac{d{L_i}}{d{w_{11}}} & \frac{d{L_i}}{d{w_{12}}} & \ldots & \frac{d{L_i}}{d{w_{c1}}}\\\vdots & \vdots & \ddots & \vdots \\\frac{d{L_i}}{d{w_{1d}}} & \frac{d{L_i}}{d{w_{2d}}} & \ldots & \frac{d{L_i}}{d{w_{cd}}}\end{array}\right)$$
+
+分析矩阵的一个元素：
+$\frac{d{L_i}}{d{w_{11}}}$
+其中：
+$$ Li=max(0,xi1w11+xi2w12…+xiDw1D−xi1wyi1−xi2wyi2…−xiDwyiD+Δ)+max(0,xi1w21+xi2w22…+xiDw2D−xi1wyi1−xi2wyi2…−xiDwyiD+Δ)+⋮max(0,xi1wC1+xi2wC2…+xiDwCD−xi1wyi1−xi2wyi2…−xiDwyiD+Δ) $$
+如果$w^T_1xi−w^T_{yi}xi+Δ>0$
+
+那么有
+$\frac{dL_i}{dw_{11}}=x_{i1}$
+借助指示函数，可以表示为
+$$\frac{dL_i}{dw_{11}}=1(w^T_1xi−w^T_{yi}xi+Δ>0)x_{i1}$$
+类似可得：
+$$
+\frac{dL_i}{dw_{12}} = \mathbb{1}(w_1^Tx_i - w_{y_i}^Tx_i + \Delta > 0) x_{i2} \\\frac{dL_i}{dw_{13}} = \mathbb{1}(w_1^Tx_i - w_{y_i}^Tx_i +       \Delta > 0) x_{i3} \\\vdots \\               \frac{dL_i}{dw_{1D}} = \mathbb{1}(w_1^Tx_i - w_{y_i}^Tx_i + \Delta > 0) x_{iD}
+$$
+即得：
+$$\frac{dL_i}{dw_{j}} = \mathbb{1}(w_j^Tx_i - w_{y_i}^Tx_i + \Delta > 0)\begin{bmatrix}
+x_{i1} \\x_{i2} \\ \vdots \\x_{iD} \end{bmatrix}\\
+
+
+= \mathbb{1}(w_j^Tx_i - w_{y_i}^Tx_i + \Delta > 0) x_i^T
+$$
+也就是：
+$$\frac{dL_i}{dw_{y_i}} = - \sum_{j\neq y_i} \mathbb{1}(x_iw_j - x_iw_{y_i} + \Delta > 0)
+  \begin{bmatrix}
+  x_{i1} \\
+  x_{i2} \\
+  \vdots \\
+  x_{iD}
+  \end{bmatrix}
+\\
+= - \sum_{j\neq y_i} \mathbb{1}(x_iw_j - x_iw_{y_i} + \Delta > 0) x_i^T \tag{3}$$
 
 end
+
+
+
+
+
+
+
+
+

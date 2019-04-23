@@ -1,7 +1,7 @@
 ---
 title: KNN 分类图片
 date: 2019-4-17
-tags: [Python, KNN]
+tags: [Python, KNN,CS231N]
 mathjax: true
 ---
 文章主要是对Stanford的CS231n的作业做一次记录。
