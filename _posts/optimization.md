@@ -253,6 +253,9 @@ $$\displaystyle L_i=\sum_{j\not=y_i}max(0,w^T_jx_i-w^T_{y_i}x_i+\Delta)$$
 >$w_j$为第j个类的权重，为长度为D的列向量。
 
 >$w_j$为我们要学习的参数，总共有C∗D 个，用W表示.
+
+
+
 损失函数$L_i$关于W的梯度可以表示为：
 $$\frac{\partial{L_i}}{\partial{w}}=[\frac{d{L_i}}{d{w_1}},\frac{d{L_i}}{d{w_2}},...,\frac{d{L_i}}{d{w_c}}]=\left( \begin{array}{ccc}\frac{d{L_i}}{d{w_{11}}} & \frac{d{L_i}}{d{w_{12}}} & \ldots & \frac{d{L_i}}{d{w_{c1}}}\\\vdots & \vdots & \ddots & \vdots \\\frac{d{L_i}}{d{w_{1d}}} & \frac{d{L_i}}{d{w_{2d}}} & \ldots & \frac{d{L_i}}{d{w_{cd}}}\end{array}\right)$$
 
@@ -260,12 +263,17 @@ $$\frac{\partial{L_i}}{\partial{w}}=[\frac{d{L_i}}{d{w_1}},\frac{d{L_i}}{d{w_2}}
 $\frac{d{L_i}}{d{w_{11}}}$
 其中：
 $$ Li=max(0,xi1w11+xi2w12…+xiDw1D−xi1wyi1−xi2wyi2…−xiDwyiD+Δ)+max(0,xi1w21+xi2w22…+xiDw2D−xi1wyi1−xi2wyi2…−xiDwyiD+Δ)+⋮max(0,xi1wC1+xi2wC2…+xiDwCD−xi1wyi1−xi2wyi2…−xiDwyiD+Δ) $$
-如果$w^T_1xi−w^T_{yi}xi+Δ>0$
+
+
+如果 
+$$w^T_1xi−w^T_{yi}xi+Δ>0$$
 
 那么有
-$\frac{dL_i}{dw_{11}}=x_{i1}$
+$$\frac{dL_i}{dw_{11}}=x_{i1}$$
+
 借助指示函数，可以表示为
 $$\frac{dL_i}{dw_{11}}=1(w^T_1xi−w^T_{yi}xi+Δ>0)x_{i1}$$
+
 类似可得：
 $$
 \frac{dL_i}{dw_{12}} = \mathbb{1}(w_1^Tx_i - w_{y_i}^Tx_i + \Delta > 0) x_{i2} \\\frac{dL_i}{dw_{13}} = \mathbb{1}(w_1^Tx_i - w_{y_i}^Tx_i +       \Delta > 0) x_{i3} \\\vdots \\               \frac{dL_i}{dw_{1D}} = \mathbb{1}(w_1^Tx_i - w_{y_i}^Tx_i + \Delta > 0) x_{iD}
