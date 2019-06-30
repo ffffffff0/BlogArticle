@@ -152,9 +152,7 @@ def compute_grad_batch(beta, batch_size, x, y):
     return np.array(grad)
 ```
 ## SVM 损失函数的梯度推导
-以SVM的损失函数的梯度计算为例；
-
-SVM的损失函数想要SVM在正确分类上的得分始终比不正确分类上的得分高出一个边界值 $\Delta$.放在线性分类其中就是，第i个数据中包含图像$x_i$的像素和代表正确类别的标签$y_i$。评分函数输入像素数据，然后通过公式$f(x_i,W)$来计算不同分类类别的分值。这里我们将分值简写为s。比如，针对第j个类别的得分就是第j个元素：$s_j=f(x_i,W)_j$。针对第i个数据的多类SVM的损失函数定义如下：
+SVM的损失函数想要SVM在正确分类上的得分始终比不正确分类上的得分高出一个边界值 $\Delta$。放在线性分类其中就是，第i个数据中包含图像$x_i$的像素和代表正确类别的标签$y_i$。评分函数输入像素数据，然后通过公式$f(x_i,W)$来计算不同分类类别的分值。这里我们将分值简写为s。比如，针对第j个类别的得分就是第j个元素：$s_j=f(x_i,W)_j$。针对第i个数据的多类SVM的损失函数定义如下：
 
 $$\displaystyle L_i=\sum_{j\not=y_i}max(0,s_j-s_{y_i}+\Delta)$$
 利用线性评分函数$(f(x_i,W)=Wx_i)$，可以将损失函数的公式改写为：
@@ -173,8 +171,7 @@ $$\displaystyle L_i=\sum_{j\not=y_i}max(0,w^T_jx_i-w^T_{y_i}x_i+\Delta)$$
 损失函数$L_i$关于W的梯度可以表示为：
 $$\frac{\partial{L_i}}{\partial{w}}=[\frac{d{L_i}}{d{w_1}},\frac{d{L_i}}{d{w_2}},...,\frac{d{L_i}}{d{w_c}}]=\left( \begin{array}{ccc}\frac{d{L_i}}{d{w_{11}}} & \frac{d{L_i}}{d{w_{12}}} & \ldots & \frac{d{L_i}}{d{w_{c1}}}\\\vdots & \vdots & \ddots & \vdots \\\frac{d{L_i}}{d{w_{1d}}} & \frac{d{L_i}}{d{w_{2d}}} & \ldots & \frac{d{L_i}}{d{w_{cd}}}\end{array}\right)$$
 
-分析矩阵的一个元素：
-$\frac{d{L_i}}{d{w_{11}}}$
+分析矩阵的一个元素：$\frac{d{L_i}}{d{w_{11}}}$
 其中：
 $$ Li=max(0,xi1w11+xi2w12…+xiDw1D−xi1wyi1−xi2wyi2…−xiDwyiD+Δ)+max(0,xi1w21+xi2w22…+xiDw2D−xi1wyi1−xi2wyi2…−xiDwyiD+Δ)+⋮max(0,xi1wC1+xi2wC2…+xiDwCD−xi1wyi1−xi2wyi2…−xiDwyiD+Δ) $$
 
