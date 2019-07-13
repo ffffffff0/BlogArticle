@@ -7,7 +7,7 @@ mathjax: true
 
 朴素贝叶斯算法是监督学习算法的一种，属于一种线性分类器，理解朴素贝叶斯就要先说贝叶斯定理。
 
-#### 贝叶斯定理
+## 贝叶斯定理
 
 **条件概率**：常常要计算在某个事件B发生的条件下，另一个事件A发生的概率。概率论中称此概率为事件B已发生的条件下事件A发生的条件概率，记为P(A|B)。
 <!-- more -->
@@ -43,7 +43,7 @@ $P(B) = P(B|A)P(A) + P(B|A')P(A')$
 
 $P(A|B) =  \frac{P(B|A)P(A)}{P(B|A)P(A)+P(B|A')P(A')}$
 
-#### 朴素贝叶斯分类器
+## 朴素贝叶斯分类器
 
 朴素贝叶斯分类器是一种基于贝叶斯定理的弱分类器，所有朴素贝叶斯分类器都假定样本每个特征与其他特征都不相关。
 
@@ -59,56 +59,209 @@ $P(A|B) = \frac {P(A\cap B)}{P(B)} = P(A)\frac {P(B|A)}{P(B)}$
 后验概率　＝　先验概率 ｘ 调整因子
 ```
 
-#### 朴素贝叶斯分类流程
+## 朴素贝叶斯分类案例
+> 使用朴素贝叶斯进行文档分类
 
-由一个天气和响应目标变量“玩”的训练数据集（计算“玩”的可能性）。我们需要根据天气条件进行分类，判断这个人能不能出去玩，以下是步骤：
+利用python构建一个分类器，对某条语句进行判断，它是否属于侮辱类的语句，分别用1和0表示。
 
-步骤1：将数据集转换成频率表；
+首先要构建一个单词向量，对句子转为向量，考虑句子中出现的单词来判断语句的类型。
 
-步骤2：计算不同天气出去玩的概率，并创建似然表，如阴天的概率是0.29；
+### 构建词向量
+利用已经标注好的文本来训练模型。
 
-![img](http://mmbiz.qpic.cn/mmbiz_png/hq0PKaHicMTFortVtEPN92OlBXYWPy1lWpYa9rZuDh8ia4Wyf1l7WyVIicogySAIPUmRRAXZBbZLVpyQib244yOibKg/?tp=webp&wxfrom=5&wx_lazy=1)
+loadDataSet() 用于加载数据集
+```
+def loadDataSet():
+    """
+    函数功能: 
+        创建数据集
+    参数: 
+         无
+    返回:
+        postingList: 划分好的数据
+        clasive: 数据的标签
+    """
+    postingList = [
+        ['my', 'dog', 'has', 'flea', 'problems', 'help', 'please'],
+        ['maybe', 'not', 'take', 'him', 'to', 'dog', 'park', 'stupid'],
+        ['my', 'dalmation', 'is', 'so', 'cute', 'I', 'love', 'him'],
+        ['stop', 'posting', 'stupid', 'worthless', 'garbage'],
+        ['mr', 'licks', 'ate', 'my', 'steak', 'how', 'to', 'stop', 'him'],
+        ['quit', 'buying', 'worthless', 'dog', 'food', 'stupid']
+    ]
+    # 类标签向量 1 代表侮辱性词汇 0 非侮辱性词汇
+    clasive = [0, 1, 0, 1, 0, 1]
+    return postingList, clasiv
+```
+createVocabList 函数创建一个单词不重复的列表。
+```
+def createVocabList(dataSet):
+    """
+    函数功能:
+        创建一个不重复词的列表
+    参数:
+        dataSet: 分割好的词汇
+    返回:
+        不重复词的列表
+    """
+    vocabSet = set([])
+    for document in dataSet:
+        # 两个集合的交集
+        vocabSet = vocabSet | set(document)
+    
+    return list(vocabSet)
+```
+setOfWordsVec 函数利用单词列表将 inpuSet 向量化
+```
+def setOfWords2Vec(vocabList, inputSet):
+    """
+    函数功能:
+        根据vocabList将inputSet向量化，向量的每个元素为1或0
+    参数:
+        vocabList: 不重复的词列表
+        inputSet: 切分好的词
+    返回:
+        文档向量
+    """
+    returnVec = [0] * len(vocabList)
+    for word in inputSet:
+        if word in vocabList:
+            returnVec[vocabList.index(word)] = 1
+        else:
+            print('the word: %s is not in my Vocavulary!' % word)
 
-步骤3：使用贝叶斯公式计算每一类的后验概率，数据最高那栏就是预测的结果。
+    return returnVec
+```
+### 构建训练函数
+利用构建好的单词向量来训练函数。
+```
+def trainNB0(trainMatrix, trainCategory):
+    """
+    函数功能:
+        朴素贝叶斯分类器训练函数
+    参数:
+        trainMatrix: 训练文档矩阵
+        trainCategory: 训练类别的标签向量
+    返回:
+        p0Vect: 非侮辱类的条件概率数组
+        p1Vect: 侮辱类的条件概率数组
+        pAbusive: 文档属于侮辱类的概率
+    """
+    # 训练文档的数量
+    numTrainDocs = len(trainMatrix)
+    # 每条文档的词条数
+    numWords = len(trainMatrix[0])
+    # 文档属于侮辱类的概率
+    pAbusive = sum(trainCategory) / float(numTrainDocs)
+    # 初始化
+    p0Num = np.ones(numWords)
+    p1Num = np.ones(numWords)
+    p0Denom = 2.0
+    p1Denom = 2.0
+    # 遍历每一个文档
+    for i in range(numTrainDocs):
+        # 统计属于侮辱类的条件概率所需的数据
+        if trainCategory[i] == 1:
+            p1Num += trainMatrix[i]
+            p1Denom += sum(trainMatrix[i])
+        # 统计属于非侮辱类的条件概率所需的数据
+        else:
+            p0Num += trainMatrix[i]
+            p0Denom += sum(trainMatrix[i])
+    # p1Vect 单词在侮辱类文档中出现的概率
+    # p0Vect 单词在非侮辱类文档中出现的概率
+    p1Vect = np.log(p1Num / p1Denom)
+    p0Vect = np.log(p0Num / p0Denom)
+    return p0Vect, p1Vect, pAbusive
+```
+getTrainMat 函数获得训练的向量列表
+```
+def getTrainMat(dataSet):
+    """
+    函数功能:
+        生成训练集的向量列表
+    参数:
+        dataSet: 分割好的词列表
+    返回:
+        trainMat: 所有词条向量组成的列表
+    """
+    trainMat = []
+    vocabList = createVocabList(dataSet)
+    for inputSet in dataSet:
+        returnVec = setOfWords2Vec(vocabList, inputSet)
+        trainMat.append(returnVec)
+    
+    return trainMa
+```
+运行如下程序可得
+```
+listOPosts, listClasses = loadDataSet()
+myVocabList = createVocabList(listOPosts)
+myTrainMat = getTrainMat(listOPosts)
+p0V, p1V, pAb = trainNB0(myTrainMat, listClasses)
+```
+![one](https://image-1252432001.cos.ap-chengdu.myqcloud.com/bayes/one.bmp)
 
-问题：如果是晴天，这个人就能出去玩。这个说法是不是正确的？
+### 测试分类器
+classifyNB 函数为贝叶斯分类函数
+```
+def classifyNB(vec2Classify, p0Vec, p1Vec, pClass1):
+    """
+    函数功能:
+        朴素贝叶斯分类器分类函数
+    参数:
+        vec2Classify: 待分类的词条数组 
+        p0Vec: 非侮辱类的条件概率数组
+        p1Vec: 侮辱类的条件概率数组
+        pClass1: 文档属于侮辱类的概率
+    返回:
+        0: 非侮辱类
+        1: 侮辱类
+    """
+    # 没有计算分母
+    p1 = np.sum(vec2Classify * p1Vec) + np.log(pClass1)
+    p0 = np.sum(vec2Classify * p0Vec) + np.log(1.0- pClass1)
+    # 判读概率大小
+    if p1 > p0:
+        return 1
+    else:
+        return 0
+```
+构建测试函数
+$$
+p(侮辱类|['stupid', 'garbage']) = \frac{p(侮辱类)p(['stupid', 'garbade']|侮辱类)}{p(['stupid', 'garbage'])}
+$$
 
-P(是|晴朗)=P(晴朗|是)×P(是)/P(晴朗)
-
-在这里，P(晴朗|是)= 3/9 = 0.33，P(晴朗)= 5/14 = 0.36，P(是)= 9/14 = 0.64
-
-现在，P(是|晴朗)=0.33×0.64/0.36=0.60，具有较高的概率。
-
-#### Python 实现朴素贝叶斯分类器
-
-scikit learn里有3种朴素贝叶斯的模型：
-
-**高斯模型**：适用于多个类型变量，假设特征符合高斯分布。
-
-**多项式模型**：用于离散计数。如一个句子中某个词语重复出现，我们视它们每个都是独立的，所以统计多次，概率指数上出现了次方。
-
-**伯努利模型**：如果特征向量是二进制（即0和1），那这个模型是非常有用的。不同于多项式，伯努利把出现多次的词语视为只出现一次，更加简单方便。
-
-以高斯模型为例：
-
-```python
-from sklearn.naive_bayes import GaussianNB
-import numpy as np
-x= np.array([[-3,7],[1,5], [1,2], [-2,0], [2,3], [-4,0], [-1,1], [1,1], [-2,2], [2,7], [-4,1], [-2,7]])
-Y = np.array([3, 3, 3, 3, 4, 3, 3, 4, 3, 4, 4, 4])
-# 建立分类器
-clf = GaussianNB()
-# 拟合数据
-clf.fit(x, y)
-# 分类
-predicted= model.predict([[1,2],[3,4]])
+其中只需要比较 $p(侮辱类|['stupid', 'garbage'])$ 与 $p(非侮辱类|['stupid', 'garbage'])$ 的大小，故不必求解 $p(['stupid', 'garbage']$
+```
+def testingNB():
+    """
+    函数功能:
+        朴素贝叶斯测试函数
+    参数:
+        无
+    返回:
+        无
+    """
+    # 创建实验样本
+    dataSet, classVec = loadDataSet()
+    # 创建词汇表
+    myVocabList = createVocabList(dataSet)
+    # 实验样本向量化
+    trainMat = getTrainMat(dataSet)
+    # 训练分类器
+    p0V, p1V, pAb = trainNB0(trainMat, classVec)
+    # 测试样例
+    testEntry = ['stupid', 'garbage']
+    thisDoc = np.array(setOfWords2Vec(myVocabList, testEntry))
+    print(testEntry, 'classified as: ', classifyNB(thisDoc, p0V, p1V, pAb))
 ```
 
+### 分类器的改进
+利用贝叶斯分类器进行分类时，计算多个概率的乘积来得到文档属于某个类别的概率， 即$p(w_0| 侮辱类), p(w_1| 侮辱类)$。 如果其中一个概率值为0，那么最后也为0，这显然是不对的，为了改变可以将所有词数的初始为1，分母初始为2，这种做法叫做拉普拉斯平滑。（代码中已更改)
 
+另外就是，很多小数相乘时，程序会下溢或者得到错误的结果，为了解决可以对乘积结果取自然对数，通过求对数可以避免下溢或者精度的错误。而且采用对数不会有任何的损失。
 
-#### 参考文章
+![two](https://image-1252432001.cos.ap-chengdu.myqcloud.com/bayes/two.bmp)
 
-[贝叶斯推断及其互联网应用（一）：定理简介](http://www.ruanyifeng.com/blog/2011/08/bayesian_inference_part_one.html)
-
-[6步骤带你了解朴素贝叶斯分类器](https://mp.weixin.qq.com/s/UXvSe_FYcS_s5HicMV6SUA)
-
+观察上图可以发现在相同的区域中的增减性一致。
