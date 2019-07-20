@@ -36,7 +36,7 @@ tags: [Python, Spider]
 
 ### 结构
 
-![test](https://github.com/spwii/crawl1/raw/master/test.jpg)
+![test](https://raw.githubusercontent.com/spwii/crawl1/master/test.jpg)
 
 - Spider 1 从[列表页](http://bj.ganji.com/zhaopin/)中获取页面下全部的个分类的链接，然后将分类的链接储存到 url_list 这个collection中。
 
@@ -44,7 +44,7 @@ tags: [Python, Spider]
 
 ### 流程图
 
-![liuchengtu](https://github.com/spwii/crawl1/raw/master/liuchengtu.png)
+![liuchengtu](https://raw.githubusercontent.com/spwii/crawl1/master/liuchengtu.png)
 
 ### code
 
@@ -83,7 +83,7 @@ wed = requests.get('http://www.bing.com', headers=headers, proxies=proxies)
 有关http的头字段可以参见 [http头字段](https://zh.wikipedia.org/wiki/HTTP%E5%A4%B4%E5%AD%97%E6%AE%B5%E5%88%97%E8%A1%A8)
 
 *headers 的位置*：
-![img](https://github.com/spwii/crawl1/blob/master/headers.png)
+![img](https://raw.githubusercontent.com/spwii/crawl1/master/headers.png)
 
 这里的 BeautifulSoup and lxml：
 > Beautiful Soup 是一个可以从HTML或XML文件中提取数据的Python库, 这里我使用 lxml 来解析。
@@ -107,10 +107,10 @@ img = soup.find('img', {'hidefocus': "true"})
 
 
 关于 lxml 与 BeautifulSoup(不同的解析库)的比较， 我写了个文件为 data_plot.ipynb, 可以得到如图:
-![images](https://github.com/spwii/crawl1/blob/master/com_ex.png)
+![images](https://raw.githubusercontent.com/spwii/crawl1/master/com_ex.png)
 
 channel_url 中定义了一个函数， 来进行获取链接，我这里将运行的结果，赋给了channel_list, 当然也可以放进数据库。
-![images](https://github.com/spwii/crawl1/blob/master/chanenl_list.png)
+![images](https://raw.githubusercontent.com/spwii/crawl1/master/chanenl_list.png)
 
 ### page_spider 是进行爬取的主要文件， 其中定义两个函数，是进行爬取信息的两个爬虫。
 
@@ -184,8 +184,8 @@ list(test)
 ###  count 文件主要是在main.py 运行时， 每5秒来检查一次数据库中数据的数量。
 
 #### 效果图
-![xiaoguotu1](https://github.com/spwii/crawl1/blob/master/xiaoguotu1.png)
-![xiaoguotu2](https://github.com/spwii/crawl1/blob/master/xiaoguotu2.png)
+![xiaoguotu1](https://raw.githubusercontent.com/spwii/crawl1/master/xiaoguotu1.png)
+![xiaoguotu2](https://raw.githubusercontent.com/spwii/crawl1/master/xiaoguotu2.png)
 
 
 ## 爬取结果

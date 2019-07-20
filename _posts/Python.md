@@ -219,7 +219,7 @@ series =  [{
 charts.plot(series,options=options,show='inline')
 
 ```
-![imgage](http://oava7ylm5.bkt.clouddn.com/chart_math.png)
+![imgage](https://image-1252432001.cos.ap-chengdu.myqcloud.com/zzuliinfo/chart_math.png)
 
 
 其实我的目的是写一个能够知道我借阅的图书到期是给我发mail，提醒我，如果可以续借帮我续借的脚本，
