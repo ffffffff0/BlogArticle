@@ -192,4 +192,54 @@ $$
 $$
 于是得到最优化问题的解$(\alpha_1^{new}, \alpha_2^{new})$。
 
-### 
+### 阈值b和差值$E_i$
+
+在每次更新$\alpha_1,\alpha_2$后，都要重新计算阈值$b$，因为b关系到了我们$f(x)$的计算，也就关系到了误差$E_i$的计算。
+
+根据$\alpha$的取值范围，去更正b的值，使间隔最大化。当$0<\alpha_1^{new}<C$时，根据**KKT条件**可知，这个点是支持向量上的点。因此，满足下列公式：
+$$
+y_1(w^Tx+b)=1\\\\
+\Rightarrow w^Tx+b=y_1
+$$
+根据拉格朗日数乘法的计算$w=\sum_{i=1}^{N}x_iy_i\alpha_i$代入
+$$
+\sum_{i=1}^{N}x_iy_i\alpha_ix+b=y_1
+$$
+由于根据α1和α2的值去更新b，所以单独提出i=1和i=2的时候，可得
+$$
+b_1^{new}=y_1-\sum_{i=3}^n\alpha_iy_iK_{i1}-\alpha_1^{new}y_1K_{11}-\alpha_2^{new}y_2K_{21}
+$$
+由于$E_i=g(x_i)-y_i=\left(\sum_{i=1}^N \alpha_iy_i\langle x_i, x\rangle +b\right)-y_i,\qquad i=1,2$可得
+$$
+E_1=\sum_{i=1}^N \alpha_iy_i\langle x_i, x\rangle +b-y_1\\\\
+=\sum_{i=3}^n\alpha_iy_iK_{i1}+\alpha_1^{old}y_1K_{11}+\alpha_2^{old}y_2K_{21}+b^{old}-y_1
+$$
+即
+$$
+y_1-\sum_{i=3}^n\alpha_iy_iK_{i1}=-E_1+\alpha_1^{old}y_1K_{11}+\alpha_2^{old}y_2K_{21}+b^{old}
+$$
+代入可得
+$$
+b_1^{new}=-E_1+\alpha_1^{old}y_1K_{11}+\alpha_2^{old}y_2K_{21}+b^{old}-\alpha_1^{new}y_1K_{11}-\alpha_2^{new}y_2K_{21}\\\\
+=-E_1-y_1K_{11}\left(\alpha_1^{new}-\alpha_2^{old}\right)-y_2K_{21}\left(\alpha_2^{new}-\alpha_2^{old}\right)+b^{old}
+$$
+同理，当$0<\alpha_1^{new}<C$, 那么
+$$
+b_2^{new}=-E_1-y_1K_{12}\left(\alpha_1^{new}-\alpha_2^{old}\right)-y_2K_{22}\left(\alpha_2^{new}-\alpha_2^{old}\right)+b^{old}
+$$
+如果$\alpha_1^{new},\alpha_2^{new}$同时满足$0<\alpha_i^{new}<C,\quad i=1,2$，那么$b_1^{new}=b_2^{new}$，其他情况下选取它们的中点作为$b^{new}$。
+$$
+b^{new}=
+\begin{cases}
+b_1,\quad 0<\alpha_1^{new}<C\\\\
+b_2,\quad 0<\alpha_2^{new}<C\\\\
+\frac{b_1+b_2}{2},\quad otherwise
+\end{cases}
+$$
+每次优化之后，也要更新$E_i$的值，更新需要$b^{new}$值，以及所有支持向量对应的$\alpha_j$
+$$
+E_i^{new}=\sum_{S}y_j\alpha_j\langle x_i, x_j\rangle +b^{new}-y_i
+$$
+其中，S是所有支持向量的$x_j$的集合。
+
+最后，更新所有的$\alpha$和b，这样模型就出来了，从而即可求出我们的分类函数。
