@@ -222,10 +222,4 @@ charts.plot(series,options=options,show='inline')
 ![imgage](https://image-1252432001.cos.ap-chengdu.myqcloud.com/zzuliinfo/chart_math.png)
 
 
-其实我的目的是写一个能够知道我借阅的图书到期是给我发mail，提醒我，如果可以续借帮我续借的脚本，
-当然我还在写(手动微笑)。。。
-
-
-更新线
-
-关于图书馆借阅脚本，已经写的差不多了，代码有点挫:[Renewbooks](https://github.com/jianaosiding/spider_code/blob/master/renew.py)
+其实我的目的是写一个能够知道我借阅的图书到期是给我发mail，提醒我，如果可以续借帮我续借的脚本:[Renewbook](https://github.com/jianaosiding/spider_code/blob/master/renew.py)

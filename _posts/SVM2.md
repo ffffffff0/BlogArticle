@@ -6,6 +6,7 @@ mathjax: true
 ---
 上篇已经得到了可以用SMO算法求解的目标函数，此篇用于梳理SMO算法，编写程序实现SMO算法。
 <!--more-->
+
 ### 松弛变量
 
 将最大值问题转换成最小值问题，目标函数为：
@@ -65,7 +66,7 @@ s.t., &0\leq \alpha_i\leq C, i=1,\ldots,n \\\\
 \end{cases}
 $$
 
-### 算法流程
+### 求解方法
 对于上面的对偶问题，其中$\alpha$变量来说，这是一个二次函数，优化$\alpha$非常容易，凸优化梯度下降一定能找到最优。
 
 坐标下降(Coordinate Descend)的变种，它每次只选择一个维度，例如 $\alpha=(\alpha_1,…,\alpha_n)$，它每次选取$\alpha_i$为变量，而将 $\alpha_1,…,\alpha_{i−1},\alpha_{i+1},…,\alpha_n$都看成是常量，从而原始的问题在这一步变成一个一元函数，然后针对这个一元函数求最小值，如此反复轮换不同的维度进行迭代，将复杂的问题简单化。
@@ -121,7 +122,7 @@ $$
 $$
 L=\max(0,\alpha_{2}^{old}+\alpha_{1}^{old}-C),H=min(C,\alpha_{2}^{old}+\alpha_{1}^{old})
 $$
-首先求未考虑约束$0\le\alpha_i \le C, i=1,2$时的$\alpha_2$的最优解$\alpha_{2}^{new,unc}$;然后再求解考虑此条件的解$\alpha_{2}^{new}$。为了叙述简单，记
+首先求未考虑约束$0\le\alpha_i \le C, i=1,2$时的$\alpha_2$的最优解$\alpha_{2}^{unew}$;然后再求解考虑此条件的解$\alpha_{2}^{new}$。为了叙述简单，记
 $$
 g(x)=\sum_{i=1}^N \alpha_iy_i\langle x_i, x\rangle +b\\\\
 v_i=\sum_{j=3}^N\alpha_iy_iK_{ij}=g(x_i)-\sum_{j=1}^2\alpha_jy_jK_{ij}-b,\quad i=1,2
@@ -152,10 +153,43 @@ $$
 \begin{aligned}
 (K_{11}+K_{22}-2K_{12})\alpha_2=&y_2(y_2-y_1+BK_{11}-BK_{12}+v_1-v_2)\\\\
 =&y_2\lbrack y_2-y_1+BK_{11}-BK_{12}+\lgroup g(x_1)-\sum_{j=1}^2\alpha_jy_jK_{1j}-b\rgroup\\\\
-&-\lgroup g(x_2)-\sum_{j=1}^2\alpha_jy_jK_{2j}-b\rgroup
+&-\lgroup g(x_2)-\sum_{j=1}^2\alpha_jy_jK_{2j}-b\rgroup]
 \end{aligned}
 $$
 将$\alpha_1^{old}y_1+\alpha_2^{old}y_2=B$代入，得到
 $$
-
+\begin{aligned}
+(K_{11}+K_{22}-2K_{12})\alpha_2^{unew}=&y_2[y_2-y_1+(\alpha_1^{old}y_1+\alpha_2^{old}y_2)K_{11}-(\alpha_1^{old}y_1+\alpha_2^{old}y_2)K_{12}\\\\&+\lgroup g(x_1)-\sum_{j=1}^2\alpha_jy_jK_{1j}-b\rgroup
+-\lgroup g(x_2)-\sum_{j=1}^2\alpha_jy_jK_{2j}-b\rgroup]\\\\&=
+y_2[(K_{11}+K_{22}-2K_{12})\alpha_2^{old}y_2+y_2-y_1+g(x_1)-g(x_2)]
+\end{aligned}
 $$
+令
+$$
+E_i=g(x_i)-y_i=\left(\sum_{i=1}^N \alpha_iy_i\langle x_i, x\rangle +b\right)-y_i,\qquad i=1,2
+$$
+$E_i$为函数$g(x)$对输入$x_i$的预测值和真实值输出$y_i$之差。则上式又可简化为
+$$
+(K_{11}+K_{22}-2K_{12})\alpha_2^{unew}=(K_{11}+K_{22}-2K_{12})\alpha_2^{old}+y_2(E_1-E_2)
+$$
+令$\eta=K_{11}+K_{22}-2K_{12}$代入，可以得到
+$$
+\alpha_2^{unew}=\alpha_2^{old}+\frac{y_2(E_1-E_2)}{\eta}
+$$
+要满足不等式约束必须将$\alpha_2^{unew}$限制在区间$[L,H]$内，可得：
+$$
+\alpha_2^{new}=
+\begin{cases}
+H,\quad\alpha_2^{unew}>H\\\\
+\alpha_2^{unew},\quad L\le\alpha_2^{unew}\le H\\\\
+L,\quad\alpha_2^{unew}<H
+\end{cases}
+$$
+可以利用$\alpha_2^{new}$求得$\alpha_1^{new}$为
+$$
+\alpha_1^{old}y_1+\alpha_2^{old}y_2=\alpha_1^{new}y_1+\alpha_2^{new}=B\\\\
+\Rightarrow\alpha_1^{new}=\alpha_1^{old}+y_1y_2(\alpha_2^{old}-\alpha_2^{new})
+$$
+于是得到最优化问题的解$(\alpha_1^{new}, \alpha_2^{new})$。
+
+### 

@@ -9,7 +9,7 @@ mathjax: true
 
 <!-- more -->
 
-#### 信息增益
+### 信息增益
 
 ![decisiontree](http://image-1252432001.coscd.myqcloud.com/decisiontree.png)
 
