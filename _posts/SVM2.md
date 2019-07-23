@@ -4,7 +4,7 @@ date: 2019-7-19
 tags: [SVM, Python, MachineLearn]
 mathjax: true
 ---
-上篇已经得到了可以用SMO算法求解的目标函数，此篇用于梳理SMO算法，编写程序实现SMO算法。
+上篇已经得到了可以用SMO算法求解的目标函数，此篇用于梳理SMO算法。
 <!--more-->
 
 ### 松弛变量
@@ -243,3 +243,53 @@ $$
 其中，S是所有支持向量的$x_j$的集合。
 
 最后，更新所有的$\alpha$和b，这样模型就出来了，从而即可求出我们的分类函数。
+
+### 算法步骤
+
+Step1: 计算误差
+$$
+E_i=g(x_i)-y_i=\left(\sum_{i=1}^N \alpha_iy_i\langle x_i, x\rangle +b\right)-y_i,\qquad i=1,2
+$$
+Step2: 计算上界$L$和下界$H$
+$$
+\begin{cases}
+L=\max(0,\alpha_{2}^{old}-\alpha_{1}^{old}),H=min(C,C+\alpha_{2}^{old}-\alpha_{1}^{old}),\quad if\quad y_i\ne y_j\\\\
+L=\max(0,\alpha_{2}^{old}+\alpha_{1}^{old}-C),H=min(C,\alpha_{2}^{old}+\alpha_{1}^{old}),\quad if\quad y_i=y_j
+\end{cases}
+$$
+Step3: 计算$\eta$
+$$
+\eta=K_{11}+K_{22}-2K_{12}
+$$
+Step4: 更新$\alpha_i$
+$$
+\alpha_i^{unew}=\alpha_i^{old}+\frac{y_i(E_1-E_2)}{\eta}
+$$
+Step5: 根据取值范围来选取$\alpha_i$
+
+$$
+\alpha_2^{new}=
+\begin{cases}
+H,\quad\alpha_2^{unew}>H\\\\
+\alpha_2^{unew},\quad L\le\alpha_2^{unew}\le H\\\\
+L,\quad\alpha_2^{unew}<H
+\end{cases}
+$$
+Step6: 更新$\alpha_i$
+$$
+\alpha_i^{new}=\alpha_i^{old}+y_iy_j(\alpha_j^{old}-\alpha_j^{new})
+$$
+Step7: 更新$b_1,b_2$
+$$
+b_1^{new}=-E_1-y_1K_{11}\left(\alpha_1^{new}-\alpha_2^{old}\right)-y_2K_{21}\left(\alpha_2^{new}-\alpha_2^{old}\right)+b^{old}\\\\
+b_2^{new}=-E_1-y_1K_{12}\left(\alpha_1^{new}-\alpha_2^{old}\right)-y_2K_{22}\left(\alpha_2^{new}-\alpha_2^{old}\right)+b^{old}
+$$
+Step8: 根据$b_1,b_2$更新$b$
+$$
+b^{new}=
+\begin{cases}
+b_1,\quad 0<\alpha_1^{new}<C\\\\
+b_2,\quad 0<\alpha_2^{new}<C\\\\
+\frac{b_1+b_2}{2},\quad otherwise
+\end{cases}
+$$
