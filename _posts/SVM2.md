@@ -263,21 +263,21 @@ $$
 $$
 Step4: 更新$\alpha_i$
 $$
-\alpha_i^{unew}=\alpha_i^{old}+\frac{y_i(E_1-E_2)}{\eta}
+\alpha_i^{new}=\alpha_i^{old}+\frac{y_i(E_1-E_2)}{\eta}
 $$
 Step5: 根据取值范围来选取$\alpha_i$
 
 $$
-\alpha_2^{new}=
+\alpha_2^{unew}=
 \begin{cases}
-H,\quad\alpha_2^{unew}>H\\\\
-\alpha_2^{unew},\quad L\le\alpha_2^{unew}\le H\\\\
-L,\quad\alpha_2^{unew}<H
+H,\quad\alpha_2^{new}>H\\\\
+\alpha_2^{new},\quad L\le\alpha_2^{new}\le H\\\\
+L,\quad\alpha_2^{new}<H
 \end{cases}
 $$
 Step6: 更新$\alpha_i$
 $$
-\alpha_i^{new}=\alpha_i^{old}+y_iy_j(\alpha_j^{old}-\alpha_j^{new})
+\alpha_i^{new}=\alpha_i^{old}+y_iy_j(\alpha_j^{old}-\alpha_j^{unew})
 $$
 Step7: 更新$b_1,b_2$
 $$
