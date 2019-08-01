@@ -3,6 +3,7 @@ title: KNN 分类图片
 date: 2019-4-17
 tags: [Python, KNN,CS231N]
 mathjax: true
+categories: [机器学习, CS231N]
 ---
 文章主要是对Stanford的CS231n的作业做一次记录。
 > Q1: k-Nearest Neighbor classifier (20 points)

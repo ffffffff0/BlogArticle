@@ -3,6 +3,7 @@ title: 线性分类
 date: 2019-4-19
 tags: [SVM, Python, CS231N]
 mathjax: true
+categories: [机器学习, CS231N]
 ---
 本文是关于CS231N中的线性分类笔记的一个总结
 

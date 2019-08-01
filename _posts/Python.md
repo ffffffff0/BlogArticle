@@ -2,6 +2,7 @@
 title: Python和图书馆网站
 date: 2016-5-5
 tags: [Python, Library]
+categories: [Python, spider]
 ---
 
 前段时间看完了python网络数据收集这本书，自己想练习一下。
@@ -46,7 +47,6 @@ except:
 ```python
 info = session.get("http://202.196.13.8:8080/reader/redr_info.php",
                    headers=headers).content.decode("UTF-8")
-
 ```
 ### code:
 

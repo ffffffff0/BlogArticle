@@ -3,6 +3,7 @@ title: 决策树
 date: 2018-2-20
 tags: [Python, MachineLearn, DecisionTrees]
 mathjax: true
+categories: 机器学习
 ---
 
 决策树是一种基本的分类与回归的方法。分类决策树模型是一种描述对实例进行分类的树形结构。

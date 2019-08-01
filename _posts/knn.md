@@ -2,6 +2,7 @@
 title: KNN算法
 date: 2018-2-21
 tags: [Python, KNN, MachineLearn]
+categories: 机器学习
 ---
 
 KNN算法可用于分类问题和回归问题。然而，K – 最近邻算法更常用于分类问题。

@@ -2,6 +2,7 @@
 title: 赶集网爬虫
 date: 2017-5-3
 tags: [Python, Spider]
+categories: [Python, spider]
 ---
 
 赶集网的爬虫，爬取赶集网上的招聘的板块上的信息并储存。
@@ -21,18 +22,15 @@ tags: [Python, Spider]
 2. 安装需要的Python的第三方库:
 <!-- more -->
 
-	```python
-	在 terminal(cmd) 中输入：
-
-	win:
-
-	pip install requests, bs4, pymongo, lxml
-
-	linux:
-
-	sudo pip3 install requests, bs4, pymongo, lxml
-
-	```
+>在 terminal(cmd) 中输入：
+>
+>win:
+>
+>pip install requests, bs4, pymongo, lxml
+>
+>linux:
+>
+>sudo pip3 install requests, bs4, pymongo, lxml
 
 ### 结构
 
@@ -58,7 +56,9 @@ tags: [Python, Spider]
 
 
 这里的 [requests](http://docs.python-requests.org/zh_CN/latest/index.html):
+
 > Requests 唯一的一个非转基因的 Python HTTP 库，人类可以安全享用。
+> 
 > *警告：非专业使用其他 HTTP 库会导致危险的副作用，包括：安全缺陷症、冗余代码症、重新发明轮子症、啃文档症、抑郁、头疼、甚至死亡。*
 
 requests 的基本用法:
@@ -78,6 +78,7 @@ print(data.text)
 wed = requests.get('http://www.bing.com', headers=headers, proxies=proxies)
 
 ```
+
 *关于代理ip* 可以在 http://cn-proxy.com/ 找到， 当然也可以写一个爬虫，将代理爬下来,*其实有种东西叫代理池*.
 
 有关http的头字段可以参见 [http头字段](https://zh.wikipedia.org/wiki/HTTP%E5%A4%B4%E5%AD%97%E6%AE%B5%E5%88%97%E8%A1%A8)
@@ -133,6 +134,7 @@ url_list1.insert_one({'url': url})
 url_list1.find().count()
 
 ```
+
 关于 *正则表达式*：
 python 中的正则表达式为 re模块， 基本用法：
 
@@ -143,6 +145,7 @@ href = re.complie('^(https?://)?bj\.ganji\.com.*\.htm')
 # 把正则表达式编译成一个正则表达式对象, 来匹配 href
 
 ```
+
 正则表达式可以参见：[正则表达式](http://www.runoob.com/python/python-reg-expressions.html)
 
 正则表达式的测试网站：[PyRegex](http://www.pyregex.com/)
@@ -179,8 +182,8 @@ test = map(lambda x: x*x, [1, 2, 3, 4, 5, 6, 7, 8, 9])
 test 为 <map object at 0x7f998e02c7b8>
 list(test)
 [1, 4, 9, 16, 16, 25, 36, 49, 64, 81]
-
 ```
+
 ###  count 文件主要是在main.py 运行时， 每5秒来检查一次数据库中数据的数量。
 
 #### 效果图

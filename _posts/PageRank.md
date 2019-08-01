@@ -3,6 +3,7 @@ title: PageRank算法
 date: 2018-2-22
 tags: [PageRank, Google, Math]
 mathjax: true
+categories: 课程设计
 ---
 
 搜索引擎是现代互联网的基础设施之一，而网页排序则是搜索引擎的需要解决的核心问题。PageRank就是解决此问题的一个革命性的算法，Google用它来体现网页的相关性和重要性，在搜索引擎优化操作中是经常被用来评估网页优化的成效因素之一。

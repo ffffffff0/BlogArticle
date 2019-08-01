@@ -2,6 +2,7 @@
 title: powershell 美化
 date: 2019-6-30
 tags: [Powershell, Scoop]
+categories: 工具
 ---
 让powershell 变得好看一点
 

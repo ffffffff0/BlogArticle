@@ -2,6 +2,7 @@
 title: CSS的定位方式
 date: 2017-10-30
 tags: [CSS]
+categories: CSS
 ---
 ## 相对定位
 ![Alt text](	http://image-1252432001.coscd.myqcloud.com/FireShot%20Capture%201%20-%20Learn%20css%20with%20blocks%20-%20file____home_wen_python_Pyweb_blocks.html.png)

@@ -3,6 +3,7 @@ title: SVM-最大间隔分类
 date: 2018-2-19
 tags: [SVM, Python, MachineLearn]
 mathjax: true
+categories: [机器学习, SVM]
 ---
 
 支持向量机属于监督学习算法，除了进行线性分类之外，SVM还可以使用核函数有效地进行非线性分类，将其输入隐式映射到高维特征空间中。

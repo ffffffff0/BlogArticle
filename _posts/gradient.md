@@ -3,6 +3,7 @@ title: 梯度下降
 date: 2019-6-1
 tags: [Python, Gradient, CS231N]
 mathjax: true
+categories: [机器学习, CS231N]
 ---
 ## 什么是梯度
 
@@ -29,14 +30,14 @@ $$\nabla f=(\frac{\partial f}{\partial x_1 }, \frac{\partial f}{\partial x_2})=(
 
 算法步骤如下：
 
-- (1) i=0时，设置初始点$x^0 = (x_1^0,x_2^0,...,x_n^0)$，设置步长也称学习率$\alpha$，设置迭代的误差阈值$tol$
-- (2) 计算目标函数在x^i上的梯度$\nabla fx^i$
-  
-- (3) 计算${x}^{i+1}$, 公式如下：
+(1) i=0时，设置初始点$x^0 = (x_1^0,x_2^0,...,x_n^0)$，设置步长也称学习率$\alpha$，设置迭代的误差阈值$tol$
 
+(2) 计算目标函数在x^i上的梯度$\nabla fx^i$
+  
+(3) 计算${x}^{i+1}$, 公式如下：
 $${x}^{i+1} = x^i - \alpha \nabla f x^i$$
 
-- (4) 计算梯度$\nabla f{x}^{i+1}$，如果$\|\nabla f_{\textbf{x}^{i+1}}\|_2\leq tol$则迭代停止，则最优解为${x}^{i+1}$，如果梯度的二范数大于$tol$，那么i=i+1，并返回(3)。
+(4) 计算梯度$\nabla f{x}^{i+1}$，如果$\|\nabla f_{\textbf{x}^{i+1}}\|_2\leq tol$则迭代停止，则最优解为${x}^{i+1}$，如果梯度的二范数大于$tol$，那么i=i+1，并返回(3)。
 
 ## full-batch gradient descent
 
@@ -170,13 +171,13 @@ $$\displaystyle L_i=\sum_{j\not=y_i}max(0,s_j-s_{y_i}+\Delta)$$
 $$\displaystyle L_i=\sum_{j\not=y_i}max(0,w^T_jx_i-w^T_{y_i}x_i+\Delta)$$
 
 >$x_i$示第i个样本,为行向量。假设有N个样本,特征个数为D
-
+>
 >$y_j$表示该样本的label，假设有C个类
-
+>
 >Δ是margin
-
+>
 >$w_j$为第j个类的权重，为长度为D的列向量。
-
+>
 >$w_j$为我们要学习的参数，总共有C∗D 个，用W表示.
 
 损失函数$L_i$关于W的梯度可以表示为：

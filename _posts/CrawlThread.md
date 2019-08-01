@@ -2,6 +2,7 @@
 title: 线程池实现爬虫
 date: 2016-7-12
 tags: [Python, Spider]
+categories: [Python, spider]
 ---
 我将会写一个很无聊的爬虫，从一个url出发解析页面，提取页面中的链接，然后重复这个过程。
 
@@ -87,7 +88,7 @@ if __name__ == '__main__':
 ```
 ### 多线程实战
 利用多线程来更加快速的爬去信息；
-```
+```python
 import requests
 import ast
 import time 
@@ -98,7 +99,7 @@ from pymongo import MongoClient
 ```
 使用标准库建立线程池。
 
-```
+```python
 def run_time(func):
     def wrapper(*args, **kw):
         start = time.time()
@@ -109,7 +110,7 @@ def run_time(func):
 ```
 使用装饰器来测试函数运行的时间。
 
-```
+```python
 class GetPersonInfo(object):
     def __init__(self):
         self.headers = {
@@ -169,7 +170,7 @@ class GetPersonInfo(object):
 ```
 运行
 
-```
+```python
 if __name__ == "__main__":
     info = GetPersonInfo()
     info.run()

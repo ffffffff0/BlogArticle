@@ -2,6 +2,7 @@
 title: 关于学校信息门户
 date: 2019-5-23
 tags: [Python, Boring, Bug]
+categories: FUN
 ---
 
 学校信息门户的一些有趣的东西。

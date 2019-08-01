@@ -3,6 +3,7 @@ title: 随机优化算法
 date: 2019-4-9
 tags: [Python, Optimization, Math]
 mathjax: true
+categories: Python
 ---
 
 优化算法是尝试不同的解，并对不同的解进行评价来找到问题的最优解。

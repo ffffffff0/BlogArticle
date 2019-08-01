@@ -3,6 +3,7 @@ title: 朴素贝叶斯
 date: 2018-2-17
 tags: [Bayes, Python, MachineLearn]
 mathjax: true
+categories: 机器学习
 ---
 
 朴素贝叶斯算法是监督学习算法的一种，属于一种线性分类器，理解朴素贝叶斯就要先说贝叶斯定理。

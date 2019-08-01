@@ -3,6 +3,7 @@ title: SVM-SMO算法
 date: 2019-7-19
 tags: [SVM, Python, MachineLearn]
 mathjax: true
+categories: [机器学习, SVM]
 ---
 上篇已经得到了可以用SMO算法求解的目标函数，此篇用于梳理SMO算法。
 <!--more-->

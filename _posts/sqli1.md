@@ -2,6 +2,7 @@
 title: sql-labs Less-1
 date: 2017-9-21
 tags: [sqli-labs]
+categories: SQL
 ---
 
 #### sql 字符

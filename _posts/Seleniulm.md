@@ -2,6 +2,7 @@
 title: selenium实现浏览器下拉页面
 date: 2016-10-10
 tags: [Python, Selenium, Spider]
+categories: [Python, spider]
 ---
 
 在我爬取美团数据的时候，发现美团的整个页面数据采用ajax来加载，ajax 就是异步的javascript和XML, 我也不是很懂， 近期打算学习js，它的功能就是网站不需要使用单独的页面请求就可以和服务器进行交互，表单采用Ajax与服务器通信。
@@ -16,7 +17,7 @@ tags: [Python, Selenium, Spider]
 
 由于我爬取的数据量较小，我只需要几个分类下的数据。我采用第二种。（第一种，模拟起来很麻烦）。
 
-```
+```python
 # 导入第三方库
 from selenium import webdriver
 import time
@@ -51,4 +52,5 @@ def get_info(page):
 get_info(i)
 
 ```
+
 我觉得代码写的很挫。。。。

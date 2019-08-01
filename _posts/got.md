@@ -2,6 +2,7 @@
 title: GOT 词云图
 date: 2016-5-4
 tags: [Python, 权力的游戏]
+categories: Python
 ---
 
 分析GOT文本， 利用jieba中文分词库和wordcloud来绘制词云图。
