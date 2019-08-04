@@ -294,3 +294,5 @@ b_2,\quad 0<\alpha_2^{new}<C\\\\
 \frac{b_1+b_2}{2},\quad otherwise
 \end{cases}
 $$
+
+### 算法优化

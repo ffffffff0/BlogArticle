@@ -1,5 +1,5 @@
 ---
-title: SVM-最大间隔分类
+title: SVM-最大间隔分类算法
 date: 2018-2-19
 tags: [SVM, Python, MachineLearn]
 mathjax: true
